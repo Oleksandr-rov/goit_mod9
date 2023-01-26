@@ -33,7 +33,7 @@ public class MyArrayList<E> {
         return elementData = Arrays.copyOf(elementData, newCapacity);
     }
     public void remove(int index) {
-            Objects.checkIndex(index, size);
+        Objects.checkIndex(index, size);
         final int newSize = size - 1;
         Object[] es;
         if ((newSize) > 0) {
