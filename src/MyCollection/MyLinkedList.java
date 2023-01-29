@@ -1,9 +1,11 @@
-package MyLinkedList;
+package MyCollection;
 
-import java.util.LinkedList;
+import MyCollection.MyList;
+import MyCollection.MyStack;
+
 import java.util.StringJoiner;
 
-public class MyLinkedList<E> {
+public class MyLinkedList<E> implements MyList<E>, MyStack<E> {
     int size = 0;
     Node<E> first;
     Node<E> last;
@@ -17,7 +19,6 @@ public class MyLinkedList<E> {
             this.prev = prev;
         }
     }
-
     public void add(E e) {
         final Node<E> l = last;
         final Node<E> newNode = new Node<>(l, e, null);
@@ -28,7 +29,6 @@ public class MyLinkedList<E> {
             l.next = newNode;
         size++;
     }
-
     public int size() {
         return size;
     }
@@ -36,9 +36,22 @@ public class MyLinkedList<E> {
          if (!(index >= 0 && index < size)) {
              throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size);
          }
-        return unlink(node(index));
+        return unlinkLast(node(index));
     }
-    E unlink(Node<E> x) {
+    private E unlinkFirst(Node<E> f) {
+        final E element = f.item;
+        final Node<E> next = f.next;
+        f.item = null;
+        f.next = null;
+        first = next;
+        if (next == null)
+            last = null;
+        else
+            next.prev = null;
+        size--;
+        return element;
+    }
+    private E unlinkLast(Node<E> x) {
         final E element = x.item;
         final Node<E> next = x.next;
         final Node<E> prev = x.prev;
@@ -83,6 +96,17 @@ public class MyLinkedList<E> {
         }
         first = last = null;
         size = 0;
+    }
+    public E poll() {
+        final Node<E> f = first;
+        return (f == null) ? null : unlinkFirst(f);
+    }
+    public E peek() {
+        final Node<E> f = first;
+        return (f == null) ? null : f.item;
+    }
+    public void push(E e){
+        add(e);
     }
 
     @Override
