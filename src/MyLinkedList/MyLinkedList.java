@@ -16,28 +16,9 @@ public class MyLinkedList<E> {
             this.next = next;
             this.prev = prev;
         }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "item=" + item +
-                    ", next=" + next +
-                    ", prev=" + prev +
-                    '}';
-        }
     }
-//    private void linkFirst(E element) {
-//        final Node<E> f = first;
-//        final Node<E> newNode = new Node<>(null, element, f);
-//        first = newNode;
-//        if (f == null)
-//            last = newNode;
-//        else
-//            f.prev = newNode;
-//        size++;
-//        //modCount++;
-//    }
-    void linkLast(E e) {
+
+    public void add(E e) {
         final Node<E> l = last;
         final Node<E> newNode = new Node<>(l, e, null);
         last = newNode;
@@ -46,20 +27,62 @@ public class MyLinkedList<E> {
         else
             l.next = newNode;
         size++;
-        //modCount++;
     }
 
-    /*---------------------------------------------------------------------------*/
-    public void add(E e) {
-        //if (size == 0)
-        //    linkFirst(e);
-        //else
-            linkLast(e);
-        //nextIndex++;
-        //expectedModCount++;
-    }
     public int size() {
         return size;
+    }
+    public E remove(int index) {
+         if (!(index >= 0 && index < size)) {
+             throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size);
+         }
+        return unlink(node(index));
+    }
+    E unlink(Node<E> x) {
+        final E element = x.item;
+        final Node<E> next = x.next;
+        final Node<E> prev = x.prev;
+
+        if (prev == null) {
+            first = next;
+        } else {
+            prev.next = next;
+            x.prev = null;
+        }
+
+        if (next == null) {
+            last = prev;
+        } else {
+            next.prev = prev;
+            x.next = null;
+        }
+
+        x.item = null;
+        size--;
+        return element;
+    }
+    public E get(int index) {
+        if (!(index >= 0 && index < size)) {
+            throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size);
+        }
+        return node(index).item;
+    }
+    Node<E> node(int index) {
+            Node<E> x = first;
+            for (int i = 0; i < index; i++)
+                x = x.next;
+            return x;
+    }
+    public void clear() {
+        for (Node<E> x = first; x != null; ) {
+            Node<E> next = x.next;
+            x.item = null;
+            x.next = null;
+            x.prev = null;
+            x = next;
+        }
+        first = last = null;
+        size = 0;
     }
 
     @Override
