@@ -1,5 +1,5 @@
 package MyCollection;
-public class Main {
+public class TestMyCollection {
     public static void main(String[] args) {
         /*****************************************  ArrayList  *****************************************/
         MyList<Integer> myArrayList = new MyArrayList<Integer>(10);
@@ -21,8 +21,10 @@ public class Main {
         System.out.println("myList.toString() = " + myList.toString());
         System.out.println("myList.size = " + myList.size());
         myList.add(2);
+        myList.add(3);
         System.out.println("myList.toString() = " + myList.toString());
         System.out.println("myList.size = " + myList.size());
+        System.out.println("myList.get(1) = " + myList.get(1));
         /*****************************************  Queue  *****************************************/
         MyStack<String> myQueue = new MyLinkedList<String>();
         myQueue.add("Alex");
