@@ -105,8 +105,22 @@ public class MyLinkedList<E> implements MyList<E>, MyStack<E> {
         final Node<E> f = first;
         return (f == null) ? null : f.item;
     }
+    public E pop() {
+        final Node<E> f = first;
+        return (f == null) ? null : unlinkFirst(f);
+    }
     public void push(E e){
-        add(e);
+        final Node<E> f = first;
+        final Node<E> newNode = new Node<>(f, e, null);
+        first = newNode;
+        if (f == null)
+            first = newNode;
+        else {
+            f.prev = newNode;
+            first.next = f;
+        }
+
+        size++;
     }
 
     @Override

@@ -2,7 +2,7 @@ package MyMap;
 
 import java.util.*;
 
-public class MyHashMap<K,V> {
+public class MyHashMap<K,V> implements MyMap<K,V>{
     Node<K,V>[] table = new Node[16];
     int size;
     static class Node<K,V> {
@@ -79,7 +79,7 @@ public class MyHashMap<K,V> {
         return null;
     }
 
-    public Node<K,V> remove(K key) {
+    public K remove(K key) {
         int hash = hash(key);
         Node<K, V>[] tab = table;
         int n = table.length;
@@ -89,12 +89,12 @@ public class MyHashMap<K,V> {
         if ((tab != null) && (tab[i] != null)) {
             if (node.hash == hash && Objects.equals(node.key, key)){
                 tab[i] = node.next;
-                return node;
+                return node.key;
             }
             while ((e = node.next) != null) {
                 if (e.hash == hash && Objects.equals(e.key, key)) {
                     node.next = node.next.next;
-                    return e;
+                    return e.key;
                 }
                 node = e;
             }

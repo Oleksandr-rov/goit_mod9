@@ -2,7 +2,7 @@ package MyMap;
 
 public class TestMyMap {
     public static void main(String[] args) {
-        MyHashMap<String, String> myHash = new MyHashMap<>();
+        MyMap<String, String> myHash = new MyHashMap<String, String>();
         myHash.put("1","Oleksandr");
         myHash.put("2","Alex");
         myHash.put("3","Mykola");
